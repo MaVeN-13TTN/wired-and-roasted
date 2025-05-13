@@ -9,13 +9,20 @@ import {
   SheetHeader,
   SheetTitle,
   SheetTrigger,
-} from '@/components/ui/sheet'
-import { Button } from '@/components/ui/button'
+} from '@/app/components/ui/sheet'
+import { Button } from '@/app/components/ui/button'
+import { useCart } from '@/app/context/cart-context'
 
 const navItems = ["CAFFEINE", "BEANS", "GEAR", "CULTURE"]
 
 export function MobileNav({ children }: { children: React.ReactNode }) {
   const [open, setOpen] = useState(false)
+  const { cart, setIsCartOpen } = useCart()
+
+  const handleCartClick = () => {
+    setOpen(false) // Close mobile menu
+    setIsCartOpen(true) // Open cart
+  }
 
   return (
     <Sheet open={open} onOpenChange={setOpen}>
@@ -60,9 +67,13 @@ export function MobileNav({ children }: { children: React.ReactNode }) {
               <Button className="bg-red-500 hover:bg-red-600 text-white font-bold py-6 mobile-touch-target">
                 FUEL UP
               </Button>
-              <Button variant="outline" className="border-zinc-700 text-zinc-300 hover:border-amber-500 hover:text-amber-500 font-bold py-6 mobile-touch-target">
+              <Button 
+                variant="outline" 
+                className="border-zinc-700 text-zinc-300 hover:border-amber-500 hover:text-amber-500 font-bold py-6 mobile-touch-target"
+                onClick={handleCartClick}
+              >
                 <ShoppingBag className="mr-2 h-5 w-5" />
-                CART
+                CART {cart.itemCount > 0 && `(${cart.itemCount})`}
               </Button>
             </div>
           </div>

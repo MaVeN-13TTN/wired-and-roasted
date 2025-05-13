@@ -5,15 +5,26 @@ import Link from "next/link"
 import { Coffee, Zap, Flame, ShoppingBag, Menu, ChevronRight, Star } from "lucide-react"
 import { useEffect, useState } from "react"
 
-import { Button } from "@/components/ui/button"
-import { MobileNav } from "@/components/mobile-nav"
-import { ResponsiveImage } from "@/components/ui/responsive-image"
-import { useIsMobile } from "@/hooks/use-mobile"
+import { Button } from "@/app/components/ui/button"
+import { MobileNav } from "@/app/components/mobile-nav"
+import { ResponsiveImage } from "@/app/components/ui/responsive-image"
+import { useIsMobile } from "@/app/hooks/use-mobile"
+import { CartDropdown } from "@/app/components/cart-dropdown"
+import { SearchBar } from "@/app/components/search-bar"
+import { useCart } from "@/app/context/cart-context"
+import { Product, products } from "@/app/types/product"
+import { ProductCard } from "@/app/components/product-card"
+import { ProductFilter } from "@/app/components/product-filter"
 
 export default function Home() {
   const isMobile = useIsMobile()
   const [isMenuOpen, setIsMenuOpen] = useState(false)
   const [isPageLoaded, setIsPageLoaded] = useState(false)
+  const { cart, isCartOpen, setIsCartOpen } = useCart()
+  const [filteredProducts, setFilteredProducts] = useState<Product[]>(products)
+  
+  // Featured products are those marked as featured in the data
+  const featuredProducts = products.filter(p => p.featured)
 
   useEffect(() => {
     // Mark page as loaded after initial render
@@ -62,13 +73,27 @@ export default function Home() {
           </nav>
 
           <div className="flex items-center gap-4">
-            <Button
-              variant="outline"
-              size="icon"
-              className="border-zinc-700 text-zinc-400 hover:text-red-500 hover:border-red-500"
-            >
-              <ShoppingBag className="h-4 w-4" />
-            </Button>
+            {/* Search Bar */}
+            <SearchBar />
+            
+            {/* Cart Button with Dropdown */}
+            <div className="relative">
+              <Button
+                variant="outline"
+                size="icon"
+                className="border-zinc-700 text-zinc-400 hover:text-red-500 hover:border-red-500"
+                onClick={() => setIsCartOpen(!isCartOpen)}
+              >
+                <ShoppingBag className="h-4 w-4" />
+                {cart.itemCount > 0 && (
+                  <span className="absolute -top-1 -right-1 bg-red-500 text-white text-xs w-4 h-4 flex items-center justify-center rounded-full">
+                    {cart.itemCount > 9 ? '9+' : cart.itemCount}
+                  </span>
+                )}
+              </Button>
+              <CartDropdown />
+            </div>
+            
             <Button className="bg-red-500 hover:bg-red-600 text-white font-bold md:inline-flex hidden">FUEL UP</Button>
             <MobileNav>
               <Button variant="ghost" size="icon" className="md:hidden text-zinc-400">
@@ -215,75 +240,24 @@ export default function Home() {
                   faint-hearted.
                 </p>
               </div>
-              <Button variant="link" className="text-amber-500 font-bold group flex items-center gap-2 self-start md:self-auto mt-2 md:mt-0">
-                VIEW ALL PRODUCTS
-                <ChevronRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
-              </Button>
+              <Link href="/products">
+                <Button variant="link" className="text-amber-500 font-bold group flex items-center gap-2 self-start md:self-auto mt-2 md:mt-0">
+                  VIEW ALL PRODUCTS
+                  <ChevronRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+                </Button>
+              </Link>
             </div>
 
+            {/* Add Product Filter */}
+            <ProductFilter 
+              products={products} 
+              onFilterChange={setFilteredProducts} 
+              className="mb-6"
+            />
+
             <div className="grid md:grid-cols-3 gap-6">
-              {[
-                {
-                  name: "NEURAL OVERLOAD",
-                  price: "$23.99",
-                  description: "Dark roast with notes of chocolate, caramel, and a jolt of intensity.",
-                  tag: "BESTSELLER",
-                  tagColor: "bg-red-500",
-                },
-                {
-                  name: "MIDNIGHT CIRCUIT",
-                  price: "$19.99",
-                  description: "Medium-dark blend with berry undertones and a smooth, electric finish.",
-                  tag: "NEW",
-                  tagColor: "bg-amber-500",
-                },
-                {
-                  name: "CHAOS THEORY",
-                  price: "$25.99",
-                  description: "Our most unpredictable roast. Complex, bold, and different with every batch.",
-                  tag: "LIMITED",
-                  tagColor: "bg-zinc-600",
-                },
-              ].map((product, index) => (
-                <div key={index} className="group relative">
-                  <div className="absolute inset-0 bg-gradient-to-b from-zinc-800/50 to-zinc-900/50 translate-y-4 rounded-xl blur-sm opacity-0 group-hover:opacity-100 transition-all duration-300 better-performance"></div>
-
-                  <div className="relative bg-zinc-900 border border-zinc-800 rounded-xl overflow-hidden transition-transform duration-300 group-hover:-translate-y-2 better-performance">
-                    <div className="h-64 bg-zinc-800 relative overflow-hidden">
-                      <ResponsiveImage
-                        desktopSrc={`/images/${['neural-overload', 'midnight-circuit', 'chaos-theory'][index]}.png`}
-                        mobileSrc={`/images/${['neural-overload', 'midnight-circuit', 'chaos-theory'][index]}.png`}
-                        fallbackSrc="/placeholder.jpg"
-                        alt={product.name}
-                        fill
-                        sizes="(max-width: 640px) 100vw, (max-width: 768px) 50vw, 33vw"
-                        className="object-cover transition-transform duration-500 group-hover:scale-110"
-                        priority={index === 2} 
-                        quality={85}
-                        loading={index !== 2 ? "lazy" : undefined}
-                      />
-                      <div className="absolute inset-0 bg-gradient-to-t from-zinc-900 via-transparent to-transparent"></div>
-
-                      {/* Product tag */}
-                      <div
-                        className={`absolute top-4 right-4 ${product.tagColor} text-white text-xs font-bold py-1 px-3 rounded-full`}
-                      >
-                        {product.tag}
-                      </div>
-                    </div>
-
-                    <div className="p-6">
-                      <div className="flex justify-between items-start mb-2">
-                        <h3 className="font-bold text-zinc-100">{product.name}</h3>
-                        <span className="font-bold text-amber-500">{product.price}</span>
-                      </div>
-                      <p className="text-zinc-400 text-sm mb-6">{product.description}</p>
-                      <Button className="w-full bg-zinc-800 hover:bg-red-500 text-zinc-100 font-bold transition-colors text-sm py-5 md:py-2.5">
-                        ADD TO CART
-                      </Button>
-                    </div>
-                  </div>
-                </div>
+              {featuredProducts.map((product) => (
+                <ProductCard key={product.id} product={product} />
               ))}
             </div>
           </div>
