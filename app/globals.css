@@ -76,3 +76,24 @@
   white-space: nowrap;
   animation: marquee 60s linear infinite;
 }
+
+/* Mobile touch target improvements */
+@layer components {
+  .mobile-touch-target {
+    @apply min-h-[44px] md:min-h-[36px];
+  }
+
+  .mobile-nav-link {
+    @apply py-3 px-2 block w-full;
+  }
+
+  /* Prevent text from being too small to read on mobile */
+  .mobile-readable {
+    @apply text-base sm:text-sm;
+  }
+
+  /* Improved spacing for touch targets */
+  .touch-gap {
+    @apply gap-4 md:gap-2;
+  }
+}
