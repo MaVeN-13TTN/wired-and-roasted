@@ -63,10 +63,10 @@
 }
 
 @keyframes marquee {
-  0% {
+  from {
     transform: translateX(0);
   }
-  100% {
+  to {
     transform: translateX(-50%);
   }
 }
@@ -75,6 +75,36 @@
   display: inline-block;
   white-space: nowrap;
   animation: marquee 60s linear infinite;
+}
+
+/* Add a class to detect if the user prefers reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  .animate-marquee {
+    animation: none !important;
+  }
+
+  .reduce-animation {
+    transition: none !important;
+    animation: none !important;
+    transform: none !important;
+  }
+
+  .animate-pulse {
+    animation: none !important;
+  }
+}
+
+/* Ensure fluid motion on all platforms */
+@layer utilities {
+  .better-performance {
+    will-change: transform;
+    backface-visibility: hidden;
+    transform: translateZ(0);
+  }
+
+  .hardware-accelerated {
+    transform: translate3d(0, 0, 0);
+  }
 }
 
 /* Mobile touch target improvements */

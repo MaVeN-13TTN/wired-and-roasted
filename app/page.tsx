@@ -121,6 +121,8 @@ export default function Home() {
                         width={32}
                         height={32}
                         className="object-cover"
+                        quality={80}
+                        priority={i === 1} // Only prioritize the first avatar
                       />
                     </div>
                   ))}
@@ -151,14 +153,15 @@ export default function Home() {
                   sizes="(max-width: 768px) 100vw, 50vw"
                   className="object-cover mix-blend-luminosity"
                   priority
+                  quality={90}
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-zinc-950 via-transparent to-transparent"></div>
 
                 {/* Floating elements */}
-                <div className="absolute top-1/4 left-1/4 bg-red-500 w-20 h-20 rounded-full blur-2xl opacity-30 animate-pulse"></div>
+                <div className="absolute top-1/4 left-1/4 bg-red-500 w-20 h-20 rounded-full blur-2xl opacity-30 hardware-accelerated reduce-animation animate-pulse"></div>
                 <div
-                  className="absolute bottom-1/3 right-1/4 bg-amber-500 w-16 h-16 rounded-full blur-2xl opacity-30 animate-pulse"
-                  style={{ animationDelay: "1s" }}
+                  className="absolute bottom-1/3 right-1/4 bg-amber-500 w-16 h-16 rounded-full blur-2xl opacity-30 hardware-accelerated reduce-animation animate-pulse"
+                  style={{ animationDelay: "1s", animationDuration: "3s" }}
                 ></div>
 
                 {/* Product tag */}
@@ -243,9 +246,9 @@ export default function Home() {
                 },
               ].map((product, index) => (
                 <div key={index} className="group relative">
-                  <div className="absolute inset-0 bg-gradient-to-b from-zinc-800/50 to-zinc-900/50 translate-y-4 rounded-xl blur-sm opacity-0 group-hover:opacity-100 transition-all duration-300"></div>
+                  <div className="absolute inset-0 bg-gradient-to-b from-zinc-800/50 to-zinc-900/50 translate-y-4 rounded-xl blur-sm opacity-0 group-hover:opacity-100 transition-all duration-300 better-performance"></div>
 
-                  <div className="relative bg-zinc-900 border border-zinc-800 rounded-xl overflow-hidden transition-transform duration-300 group-hover:-translate-y-2">
+                  <div className="relative bg-zinc-900 border border-zinc-800 rounded-xl overflow-hidden transition-transform duration-300 group-hover:-translate-y-2 better-performance">
                     <div className="h-64 bg-zinc-800 relative overflow-hidden">
                       <ResponsiveImage
                         desktopSrc={`/images/${['neural-overload', 'midnight-circuit', 'chaos-theory'][index]}.png`}
@@ -256,6 +259,8 @@ export default function Home() {
                         sizes="(max-width: 640px) 100vw, (max-width: 768px) 50vw, 33vw"
                         className="object-cover transition-transform duration-500 group-hover:scale-110"
                         priority={index === 2} 
+                        quality={85}
+                        loading={index !== 2 ? "lazy" : undefined}
                       />
                       <div className="absolute inset-0 bg-gradient-to-t from-zinc-900 via-transparent to-transparent"></div>
 
