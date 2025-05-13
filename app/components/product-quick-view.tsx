@@ -71,15 +71,17 @@ export function QuickViewButton({ product }: QuickViewButtonProps) {
             )}
 
             {/* Close button */}
-            <DialogClose className="absolute top-3 right-3">
-              <Button 
-                variant="outline" 
-                size="icon" 
-                className="h-8 w-8 rounded-full bg-zinc-800 border-zinc-700 hover:bg-zinc-700"
-              >
-                <X className="h-4 w-4" />
-              </Button>
-            </DialogClose>
+            <div className="absolute top-3 right-3">
+              <DialogClose asChild>
+                <Button 
+                  variant="outline" 
+                  size="icon" 
+                  className="h-8 w-8 rounded-full bg-zinc-800 border-zinc-700 hover:bg-zinc-700"
+                >
+                  <X className="h-4 w-4" />
+                </Button>
+              </DialogClose>
+            </div>
           </div>
 
           {/* Product Details */}
