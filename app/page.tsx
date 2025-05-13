@@ -89,7 +89,7 @@ export default function Home() {
                   {[1, 2, 3, 4].map((i) => (
                     <div key={i} className="w-8 h-8 rounded-full border-2 border-zinc-900 overflow-hidden">
                       <Image
-                        src={`/placeholder.svg?height=50&width=50&text=${i}`}
+                        src={`/images/placeholder-user.jpg`}
                         alt="Customer"
                         width={32}
                         height={32}
@@ -116,7 +116,7 @@ export default function Home() {
               <div className="relative aspect-square rounded-2xl overflow-hidden border border-zinc-800 bg-zinc-950">
                 <div className="absolute inset-0 bg-noise opacity-20"></div>
                 <Image
-                  src="/placeholder.svg?height=800&width=800"
+                  src="/images/voltage-void.png"
                   alt="Wired & Roasted Coffee"
                   fill
                   className="object-cover mix-blend-luminosity"
@@ -217,7 +217,7 @@ export default function Home() {
                   <div className="relative bg-zinc-900 border border-zinc-800 rounded-xl overflow-hidden transition-transform duration-300 group-hover:-translate-y-2">
                     <div className="h-64 bg-zinc-800 relative overflow-hidden">
                       <Image
-                        src={`/placeholder.svg?height=400&width=600&text=Coffee${index + 1}`}
+                        src={`/images/${['neural-overload', 'midnight-circuit', 'chaos-theory'][index]}.png`}
                         alt={product.name}
                         fill
                         className="object-cover transition-transform duration-500 group-hover:scale-110"
