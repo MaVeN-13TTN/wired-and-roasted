@@ -12,19 +12,17 @@ import { useIsMobile } from "@/app/hooks/use-mobile"
 import { CartDropdown } from "@/app/components/cart-dropdown"
 import { SearchBar } from "@/app/components/search-bar"
 import { useCart } from "@/app/context/cart-context"
-import { Product, products } from "@/app/types/product"
+import { products } from "@/app/types/product"
 import { ProductCard } from "@/app/components/product-card"
-import { ProductFilter } from "@/app/components/product-filter"
 
 export default function Home() {
   const isMobile = useIsMobile()
   const [isMenuOpen, setIsMenuOpen] = useState(false)
   const [isPageLoaded, setIsPageLoaded] = useState(false)
   const { cart, isCartOpen, setIsCartOpen } = useCart()
-  const [filteredProducts, setFilteredProducts] = useState<Product[]>(products)
-  
-  // Featured products are those marked as featured in the data
-  const featuredProducts = products.filter(p => p.featured)
+
+  // Featured products are those marked as featured in the data, limited to 3
+  const featuredProducts = products.filter(p => p.featured).slice(0, 3)
 
   useEffect(() => {
     // Mark page as loaded after initial render
@@ -76,7 +74,7 @@ export default function Home() {
           <div className="flex items-center gap-4">
             {/* Search Bar */}
             <SearchBar />
-            
+
             {/* Cart Button with Dropdown */}
             <div className="relative">
               <Button
@@ -96,7 +94,7 @@ export default function Home() {
               </Button>
               <CartDropdown />
             </div>
-            
+
             <Button className="bg-red-500 hover:bg-red-600 text-white font-bold md:inline-flex hidden focus-visible-ring">FUEL UP</Button>
             <MobileNav>
               <Button variant="ghost" size="icon" className="md:hidden text-medium-contrast focus-visible-ring" aria-label="Open navigation menu">
@@ -174,7 +172,7 @@ export default function Home() {
                 <div className="absolute inset-0 bg-noise opacity-20"></div>
                 <ResponsiveImage
                   desktopSrc="/images/voltage-void.png"
-                  mobileSrc="/images/voltage-void.png" 
+                  mobileSrc="/images/voltage-void.png"
                   fallbackSrc="/placeholder.jpg"
                   alt="Voltage Void coffee blend - our signature high-caffeine dark roast"
                   fill
@@ -250,13 +248,6 @@ export default function Home() {
                 </Button>
               </Link>
             </div>
-
-            {/* Add Product Filter */}
-            <ProductFilter 
-              products={products} 
-              onFilterChange={setFilteredProducts} 
-              className="mb-6"
-            />
 
             <div className="grid md:grid-cols-3 gap-6">
               {featuredProducts.map((product) => (

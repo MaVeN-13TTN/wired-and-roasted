@@ -5,7 +5,7 @@ export type ProductCategory = 'CAFFEINE' | 'BEANS' | 'GEAR' | 'CULTURE';
 export type ProductTag = 'BESTSELLER' | 'NEW' | 'LIMITED' | 'SALE';
 
 export interface Product {
-  id: string; 
+  id: string;
   name: string;
   price: string;
   numericPrice: number; // For sorting and calculations
@@ -127,6 +127,102 @@ export const products: Product[] = [
     intensity: 4,
     roastLevel: 'medium',
     origin: 'Costa Rica',
+    featured: false,
+    isAvailable: true
+  },
+  {
+    id: 'cold-reboot',
+    name: 'COLD REBOOT',
+    price: '$18.99',
+    numericPrice: 18.99,
+    description: 'Refreshing cold brew blend designed to restart your system with a clean, smooth taste.',
+    tag: 'NEW',
+    tagColor: 'bg-amber-500',
+    image: '/images/cold-reboot.png',
+    category: 'CAFFEINE',
+    intensity: 3,
+    roastLevel: 'light',
+    origin: 'Guatemala',
+    featured: false,
+    isAvailable: true
+  },
+  {
+    id: 'core-code',
+    name: 'CORE CODE',
+    price: '$24.99',
+    numericPrice: 24.99,
+    description: 'The foundation of our lineup. A perfectly balanced medium roast with chocolate notes.',
+    tag: 'BESTSELLER',
+    tagColor: 'bg-red-500',
+    image: '/images/core-code.png',
+    category: 'BEANS',
+    intensity: 3,
+    roastLevel: 'medium',
+    origin: 'Peru',
+    featured: false,
+    isAvailable: true
+  },
+  {
+    id: 'dark-syntax',
+    name: 'DARK SYNTAX',
+    price: '$22.99',
+    numericPrice: 22.99,
+    description: 'Complex dark roast with deep, rich flavors and a hint of smokiness.',
+    tag: 'LIMITED',
+    tagColor: 'bg-zinc-600',
+    image: '/images/dark-syntax.png',
+    category: 'BEANS',
+    intensity: 4,
+    roastLevel: 'dark',
+    origin: 'Sumatra',
+    featured: false,
+    isAvailable: true
+  },
+  {
+    id: 'data-storm',
+    name: 'DATA STORM',
+    price: '$27.99',
+    numericPrice: 27.99,
+    description: 'A whirlwind of flavors with fruity notes and a surprising spicy finish.',
+    tag: 'NEW',
+    tagColor: 'bg-amber-500',
+    image: '/images/data-storm.png',
+    category: 'CAFFEINE',
+    intensity: 4,
+    roastLevel: 'medium',
+    origin: 'Kenya',
+    featured: false,
+    isAvailable: true
+  },
+  {
+    id: 'firewall-fuel',
+    name: 'FIREWALL FUEL',
+    price: '$25.99',
+    numericPrice: 25.99,
+    description: 'Protection against drowsiness with this high-caffeine blend with a spicy kick.',
+    tag: 'BESTSELLER',
+    tagColor: 'bg-red-500',
+    image: '/images/firewall-fuel.png',
+    category: 'CAFFEINE',
+    intensity: 5,
+    roastLevel: 'dark',
+    origin: 'India',
+    featured: false,
+    isAvailable: true
+  },
+  {
+    id: 'quantum-fade',
+    name: 'QUANTUM FADE',
+    price: '$29.99',
+    numericPrice: 29.99,
+    description: 'Our most mysterious blend. Flavors shift and change as the coffee cools.',
+    tag: 'LIMITED',
+    tagColor: 'bg-zinc-600',
+    image: '/images/quantum-fade.png',
+    category: 'BEANS',
+    intensity: 4,
+    roastLevel: 'medium-dark',
+    origin: 'Ethiopia/Colombia Blend',
     featured: false,
     isAvailable: true
   }
