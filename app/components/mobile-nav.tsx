@@ -32,7 +32,7 @@ export function MobileNav({ children }: { children: React.ReactNode }) {
       <SheetContent 
         side="right" 
         className="w-full sm:max-w-md bg-zinc-900 border-zinc-800 p-0 overflow-y-auto"
-        description="Wired & Roasted mobile navigation menu"
+        aria-label="Mobile navigation menu"
       >
         <div className="h-full flex flex-col">
           <SheetHeader className="p-6 border-b border-zinc-800">
@@ -48,13 +48,14 @@ export function MobileNav({ children }: { children: React.ReactNode }) {
           </SheetHeader>
           
           <div className="flex-1 overflow-auto py-6">
-            <nav className="flex flex-col px-6">
+            <nav className="flex flex-col px-6" aria-label="Main navigation">
               {navItems.map((item) => (
                 <Link
                   key={item}
                   href="#"
-                  className="py-4 border-b border-zinc-800 text-lg font-bold tracking-wider hover:text-red-500 transition-colors mobile-touch-target"
+                  className="py-4 border-b border-zinc-800 text-lg font-bold tracking-wider hover:text-red-500 transition-colors mobile-touch-target focus-visible-ring"
                   onClick={() => setOpen(false)}
+                  role="menuitem"
                 >
                   {item}
                 </Link>
@@ -64,15 +65,16 @@ export function MobileNav({ children }: { children: React.ReactNode }) {
           
           <div className="p-6 border-t border-zinc-800">
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-              <Button className="bg-red-500 hover:bg-red-600 text-white font-bold py-6 mobile-touch-target">
+              <Button className="bg-red-500 hover:bg-red-600 text-white font-bold py-6 mobile-touch-target focus-visible-ring">
                 FUEL UP
               </Button>
               <Button 
                 variant="outline" 
-                className="border-zinc-700 text-zinc-300 hover:border-amber-500 hover:text-amber-500 font-bold py-6 mobile-touch-target"
+                className="border-zinc-700 text-zinc-300 hover:border-amber-500 hover:text-amber-500 font-bold py-6 mobile-touch-target focus-visible-ring"
                 onClick={handleCartClick}
+                aria-label={`Open cart with ${cart.itemCount} items`}
               >
-                <ShoppingBag className="mr-2 h-5 w-5" />
+                <ShoppingBag className="mr-2 h-5 w-5" aria-hidden="true" />
                 CART {cart.itemCount > 0 && `(${cart.itemCount})`}
               </Button>
             </div>

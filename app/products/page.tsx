@@ -11,7 +11,7 @@ export default function ProductsPage() {
 
   return (
     <div className="bg-zinc-900 text-zinc-200 min-h-screen pt-8 pb-16">
-      <div className="container mx-auto px-4">
+      <div id="main-content" className="container mx-auto px-4">
         {/* Breadcrumbs */}
         <Breadcrumbs 
           items={[
@@ -40,8 +40,8 @@ export default function ProductsPage() {
                 All Products <span className="text-zinc-500 text-lg font-normal ml-2">({filteredProducts.length})</span>
               </h1>
               <div className="flex items-center gap-2">
-                <span className="text-zinc-400 text-sm">Sort by:</span>
-                <select className="bg-zinc-800 border border-zinc-700 rounded text-sm p-1">
+                <span className="text-medium-contrast text-sm">Sort by:</span>
+                <select className="bg-zinc-800 border border-zinc-700 rounded text-sm p-1 focus-visible-ring" aria-label="Sort products by">
                   <option>Featured</option>
                   <option>Price: Low to High</option>
                   <option>Price: High to Low</option>
@@ -59,7 +59,7 @@ export default function ProductsPage() {
             ) : (
               <div className="text-center py-12 bg-zinc-800 rounded-lg">
                 <h3 className="text-xl font-bold mb-2">No products found</h3>
-                <p className="text-zinc-400 mb-4">Try adjusting your filters to find what you're looking for.</p>
+                <p className="text-medium-contrast mb-4">Try adjusting your filters to find what you're looking for.</p>
               </div>
             )}
           </div>

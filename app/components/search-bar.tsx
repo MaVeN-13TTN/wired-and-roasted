@@ -83,7 +83,11 @@ export function SearchBar() {
       </Button>
 
       {isOpen && (
-        <div className="absolute right-0 top-full mt-2 w-80 md:w-96 rounded-md bg-zinc-800 border border-zinc-700 shadow-xl overflow-hidden">
+        <div 
+          className="absolute right-0 top-full mt-2 w-80 md:w-96 rounded-md bg-zinc-800 border border-zinc-700 shadow-xl overflow-hidden"
+          role="dialog"
+          aria-label="Search products"
+        >
           <div className="p-3 border-b border-zinc-700">
             <form onSubmit={handleSubmit} className="flex items-center gap-2">
               <Input
@@ -93,6 +97,9 @@ export function SearchBar() {
                 className="flex-1 bg-zinc-900 border-zinc-700 focus-visible:ring-red-500"
                 value={query}
                 onChange={(e) => setQuery(e.target.value)}
+                aria-label="Search product catalog"
+                aria-expanded={query.trim() !== ''}
+                aria-controls="search-results"
               />
               <Button 
                 type="button" 
@@ -100,6 +107,7 @@ export function SearchBar() {
                 size="icon" 
                 className="h-8 w-8 text-zinc-400 hover:text-white"
                 onClick={() => setQuery('')}
+                aria-label="Clear search"
               >
                 <X className="h-4 w-4" />
               </Button>
@@ -107,7 +115,7 @@ export function SearchBar() {
           </div>
 
           {query.trim() !== '' && (
-            <div className="max-h-80 overflow-y-auto">
+            <div className="max-h-80 overflow-y-auto" id="search-results" role="listbox">
               {results.length > 0 ? (
                 <div>
                   {results.map((product) => (
@@ -115,13 +123,16 @@ export function SearchBar() {
                       key={product.id} 
                       href={`/product/${product.id}`}
                       onClick={() => setIsOpen(false)}
+                      className="focus-visible-ring"
+                      role="option"
+                      aria-selected="false"
                     >
                       <div className="flex items-center gap-3 p-3 hover:bg-zinc-700 transition-colors">
                         <div className="w-12 h-12 bg-zinc-900 rounded-md overflow-hidden relative flex-shrink-0">
                           {product.image && (
                             <Image 
                               src={product.image} 
-                              alt={product.name} 
+                              alt={`${product.name} - ${product.description.substring(0, 40)}...`}
                               fill 
                               className="object-cover"
                             />

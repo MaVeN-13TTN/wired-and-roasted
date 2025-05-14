@@ -49,22 +49,23 @@ export default function Home() {
       {/* Header */}
       <header className="sticky top-0 z-50 border-b border-zinc-800 bg-zinc-900/80 backdrop-blur-md">
         <div className="container mx-auto px-4 py-4 flex items-center justify-between">
-          <Link href="/" className="flex items-center gap-2 group">
+          <Link href="/" className="flex items-center gap-2 group focus-visible-ring" aria-label="Wired & Roasted Home">
             <div className="relative">
-              <Zap className="h-6 w-6 text-red-500 absolute -left-1 -top-1 opacity-70 group-hover:opacity-100 transition-all duration-300 animate-pulse" />
-              <Coffee className="h-6 w-6 text-zinc-100 relative z-10" />
+              <Zap className="h-6 w-6 text-red-500 absolute -left-1 -top-1 opacity-70 group-hover:opacity-100 transition-all duration-300 animate-pulse" aria-hidden="true" />
+              <Coffee className="h-6 w-6 text-zinc-100 relative z-10" aria-hidden="true" />
             </div>
             <span className="font-black text-xl tracking-tighter">
               <span className="text-red-500">WIRED</span> & <span className="text-amber-500">ROASTED</span>
             </span>
           </Link>
 
-          <nav className="hidden md:flex items-center gap-8">
+          <nav className="hidden md:flex items-center gap-8" aria-label="Main navigation">
             {["CAFFEINE", "BEANS", "GEAR", "CULTURE"].map((item) => (
               <Link
                 key={item}
                 href="#"
-                className="text-sm font-bold tracking-wider hover:text-red-500 transition-colors relative group px-2 py-2 mobile-touch-target"
+                className="text-sm font-bold tracking-wider hover:text-red-500 transition-colors relative group px-2 py-2 mobile-touch-target focus-visible-ring"
+                role="menuitem"
               >
                 {item}
                 <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-red-500 group-hover:w-full transition-all duration-300"></span>
@@ -81,10 +82,12 @@ export default function Home() {
               <Button
                 variant="outline"
                 size="icon"
-                className="border-zinc-700 text-zinc-400 hover:text-red-500 hover:border-red-500"
+                className="border-zinc-700 text-medium-contrast hover:text-red-500 hover:border-red-500 focus-visible-ring"
                 onClick={() => setIsCartOpen(!isCartOpen)}
+                aria-label={`Shopping cart with ${cart.itemCount} items`}
+                aria-expanded={isCartOpen}
               >
-                <ShoppingBag className="h-4 w-4" />
+                <ShoppingBag className="h-4 w-4" aria-hidden="true" />
                 {cart.itemCount > 0 && (
                   <span className="absolute -top-1 -right-1 bg-red-500 text-white text-xs w-4 h-4 flex items-center justify-center rounded-full">
                     {cart.itemCount > 9 ? '9+' : cart.itemCount}
@@ -94,17 +97,17 @@ export default function Home() {
               <CartDropdown />
             </div>
             
-            <Button className="bg-red-500 hover:bg-red-600 text-white font-bold md:inline-flex hidden">FUEL UP</Button>
+            <Button className="bg-red-500 hover:bg-red-600 text-white font-bold md:inline-flex hidden focus-visible-ring">FUEL UP</Button>
             <MobileNav>
-              <Button variant="ghost" size="icon" className="md:hidden text-zinc-400">
-                <Menu className="h-5 w-5" />
+              <Button variant="ghost" size="icon" className="md:hidden text-medium-contrast focus-visible-ring" aria-label="Open navigation menu">
+                <Menu className="h-5 w-5" aria-hidden="true" />
               </Button>
             </MobileNav>
           </div>
         </div>
       </header>
 
-      <main>
+      <main id="main-content">
         {/* Hero Section */}
         <section className="relative py-12 md:py-24 overflow-hidden border-b border-zinc-800">
           <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_50%,rgba(220,38,38,0.15),transparent_50%)]"></div>
@@ -119,7 +122,7 @@ export default function Home() {
                 COFFEE THAT <span className="text-red-500 inline-block transform -rotate-2">ELECTRIFIES</span> YOUR
                 SYSTEM
               </h1>
-              <p className="text-zinc-400 text-base md:text-lg">
+              <p className="text-medium-contrast text-base md:text-lg">
                 Meticulously sourced, chaotically roasted. For those who demand intensity in every cup. No compromises.
                 No weak brews.
               </p>
@@ -142,7 +145,7 @@ export default function Home() {
                     <div key={i} className="w-8 h-8 rounded-full border-2 border-zinc-900 overflow-hidden">
                       <Image
                         src={`/placeholder-user.jpg`}
-                        alt="Customer"
+                        alt={`Happy Wired & Roasted customer ${i}`}
                         width={32}
                         height={32}
                         className="object-cover"
@@ -158,7 +161,7 @@ export default function Home() {
                       <Star key={i} className="w-3 h-3 fill-amber-500 text-amber-500" />
                     ))}
                   </div>
-                  <p className="text-zinc-400 text-xs md:text-sm">
+                  <p className="text-medium-contrast text-xs md:text-sm">
                     From <span className="text-zinc-300">2,400+</span> caffeinated reviews
                   </p>
                 </div>
@@ -173,7 +176,7 @@ export default function Home() {
                   desktopSrc="/images/voltage-void.png"
                   mobileSrc="/images/voltage-void.png" 
                   fallbackSrc="/placeholder.jpg"
-                  alt="Wired & Roasted Coffee"
+                  alt="Voltage Void coffee blend - our signature high-caffeine dark roast"
                   fill
                   sizes="(max-width: 768px) 100vw, 50vw"
                   className="object-cover mix-blend-luminosity"
@@ -194,7 +197,7 @@ export default function Home() {
                   <div className="flex justify-between items-start">
                     <div>
                       <h3 className="font-bold text-zinc-100">VOLTAGE ESPRESSO</h3>
-                      <p className="text-xs text-zinc-400">Our signature high-caffeine blend</p>
+                      <p className="text-xs text-medium-contrast">Our signature high-caffeine blend</p>
                     </div>
                     <div className="text-amber-500 font-bold">$21.99</div>
                   </div>
@@ -235,7 +238,7 @@ export default function Home() {
                 <h2 className="text-2xl sm:text-3xl md:text-5xl font-black tracking-tighter">
                   FUEL YOUR <span className="text-red-500">OBSESSION</span>
                 </h2>
-                <p className="text-zinc-400 mt-3 md:mt-4 max-w-xl">
+                <p className="text-medium-contrast mt-3 md:mt-4 max-w-xl">
                   Our most potent blends, crafted for those who demand more from their coffee. Not for the
                   faint-hearted.
                 </p>
@@ -273,7 +276,7 @@ export default function Home() {
               <h2 className="text-3xl md:text-5xl font-black tracking-tighter mb-6">
                 WHY WE'RE <span className="text-red-500">DIFFERENT</span>
               </h2>
-              <p className="text-zinc-400">
+              <p className="text-medium-contrast">
                 We don't just make coffee. We create an experience that pushes boundaries. Our process is chaotic by
                 design, accurate by obsession.
               </p>
@@ -310,7 +313,7 @@ export default function Home() {
                       {feature.icon}
                     </div>
                     <h3 className="text-xl font-bold text-zinc-100 mb-4">{feature.title}</h3>
-                    <p className="text-zinc-400">{feature.description}</p>
+                    <p className="text-medium-contrast">{feature.description}</p>
                   </div>
                 </div>
               ))}
@@ -334,7 +337,7 @@ export default function Home() {
                 <h2 className="text-2xl sm:text-3xl md:text-4xl font-black tracking-tighter text-center mb-3 md:mb-4">
                   JOIN THE <span className="text-red-500">VOLTAGE</span> CLUB
                 </h2>
-                <p className="text-zinc-400 text-center max-w-2xl mx-auto mb-6 md:mb-8 text-sm md:text-base">
+                <p className="text-medium-contrast text-center max-w-2xl mx-auto mb-6 md:mb-8 text-sm md:text-base">
                   Get exclusive access to limited roasts, experimental blends, and discounts that will shock your
                   system.
                 </p>
@@ -344,8 +347,10 @@ export default function Home() {
                     type="email"
                     placeholder="YOUR EMAIL ADDRESS"
                     className="flex-1 px-4 py-3 md:py-3 rounded-lg bg-zinc-800 border border-zinc-700 text-zinc-200 placeholder:text-zinc-500 focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-transparent text-sm md:text-base"
+                    aria-label="Email address for newsletter subscription"
+                    required
                   />
-                  <Button className="bg-red-500 hover:bg-red-600 text-white font-bold whitespace-nowrap py-6 sm:py-3">
+                  <Button className="bg-red-500 hover:bg-red-600 text-white font-bold whitespace-nowrap py-6 sm:py-3 focus-visible-ring">
                     GET WIRED
                   </Button>
                 </form>
@@ -395,7 +400,7 @@ export default function Home() {
               <ul className="space-y-1.5 md:space-y-2">
                 {column.links.map((link, i) => (
                   <li key={i}>
-                    <Link href="#" className="text-zinc-500 hover:text-red-500 text-sm transition-colors block py-1.5 px-1 mobile-touch-target">
+                    <Link href="#" className="text-zinc-500 hover:text-red-500 text-sm transition-colors block py-1.5 px-1 mobile-touch-target focus-visible-ring">
                       {link}
                     </Link>
                   </li>
@@ -408,13 +413,13 @@ export default function Home() {
           <div className="border-t border-zinc-800 mt-10 pt-6 md:mt-12 md:pt-8 flex flex-col md:flex-row justify-between items-center gap-4">
             <p className="text-zinc-500 text-xs md:text-sm text-center md:text-left">© 2025 Wired & Roasted. All rights reserved. Consume responsibly.</p>
             <div className="flex items-center gap-4 md:gap-6 flex-wrap justify-center">
-              <Link href="#" className="text-zinc-500 hover:text-zinc-300 text-xs py-2 px-3 mobile-touch-target inline-block">
+              <Link href="#" className="text-zinc-500 hover:text-zinc-300 text-xs py-2 px-3 mobile-touch-target focus-visible-ring inline-block">
                 Privacy Policy
               </Link>
-              <Link href="#" className="text-zinc-500 hover:text-zinc-300 text-xs py-2 px-3 mobile-touch-target inline-block">
+              <Link href="#" className="text-zinc-500 hover:text-zinc-300 text-xs py-2 px-3 mobile-touch-target focus-visible-ring inline-block">
                 Terms of Service
               </Link>
-              <Link href="#" className="text-zinc-500 hover:text-zinc-300 text-xs py-2 px-3 mobile-touch-target inline-block">
+              <Link href="#" className="text-zinc-500 hover:text-zinc-300 text-xs py-2 px-3 mobile-touch-target focus-visible-ring inline-block">
                 Shipping Info
               </Link>
             </div>

@@ -43,9 +43,10 @@ export function QuickViewButton({ product }: QuickViewButtonProps) {
         <Button 
           variant="outline" 
           size="icon" 
-          className="border-zinc-700 bg-zinc-800/60 backdrop-blur-sm hover:bg-zinc-700 absolute top-2 right-2 z-10 rounded-full"
+          className="border-zinc-700 bg-zinc-800/60 backdrop-blur-sm hover:bg-zinc-700 absolute top-2 right-2 z-10 rounded-full focus-visible-ring"
+          aria-label={`Quick view ${product.name}`}
         >
-          <Eye className="h-4 w-4" />
+          <Eye className="h-4 w-4" aria-hidden="true" />
         </Button>
       </DialogTrigger>
       <DialogContent className="sm:max-w-[550px] bg-zinc-900 border-zinc-800 p-0 overflow-hidden">
@@ -55,12 +56,12 @@ export function QuickViewButton({ product }: QuickViewButtonProps) {
             {product.image ? (
               <Image 
                 src={product.image} 
-                alt={product.name} 
+                alt={`${product.name} - ${product.roastLevel || ''} roast coffee${product.origin ? ` from ${product.origin}` : ''} - ${product.description}`}
                 fill 
                 className="object-cover"
               />
             ) : (
-              <ShoppingBag className="h-16 w-16 text-zinc-700" />
+              <ShoppingBag className="h-16 w-16 text-zinc-700" aria-hidden="true" />
             )}
 
             {/* Product Tag */}
@@ -76,9 +77,10 @@ export function QuickViewButton({ product }: QuickViewButtonProps) {
                 <Button 
                   variant="outline" 
                   size="icon" 
-                  className="h-8 w-8 rounded-full bg-zinc-800 border-zinc-700 hover:bg-zinc-700"
+                  className="h-8 w-8 rounded-full bg-zinc-800 border-zinc-700 hover:bg-zinc-700 focus-visible-ring"
+                  aria-label="Close quick view"
                 >
-                  <X className="h-4 w-4" />
+                  <X className="h-4 w-4" aria-hidden="true" />
                 </Button>
               </DialogClose>
             </div>
@@ -94,13 +96,13 @@ export function QuickViewButton({ product }: QuickViewButtonProps) {
               {product.price}
             </div>
 
-            <p className="text-zinc-400 text-sm mb-4">
+            <p className="text-medium-contrast text-sm mb-4">
               {product.description}
             </p>
 
             {product.intensity && (
               <div className="mb-4">
-                <div className="text-sm text-zinc-400 mb-1">Intensity</div>
+                <div className="text-sm text-medium-contrast mb-1">Intensity</div>
                 <div className="flex">
                   {Array(5).fill(0).map((_, i) => (
                     <span 
@@ -116,14 +118,14 @@ export function QuickViewButton({ product }: QuickViewButtonProps) {
 
             {product.origin && (
               <div className="mb-4">
-                <div className="text-sm text-zinc-400 mb-1">Origin</div>
+                <div className="text-sm text-medium-contrast mb-1">Origin</div>
                 <div className="font-medium">{product.origin}</div>
               </div>
             )}
 
             {product.roastLevel && (
               <div className="mb-4">
-                <div className="text-sm text-zinc-400 mb-1">Roast Level</div>
+                <div className="text-sm text-medium-contrast mb-1">Roast Level</div>
                 <div className="font-medium capitalize">{product.roastLevel}</div>
               </div>
             )}
@@ -134,28 +136,31 @@ export function QuickViewButton({ product }: QuickViewButtonProps) {
                   <Button 
                     variant="ghost" 
                     size="icon" 
-                    className="h-9 w-9 rounded-none border-r border-zinc-700"
+                    className="h-9 w-9 rounded-none border-r border-zinc-700 focus-visible-ring"
                     onClick={decreaseQuantity}
                     disabled={quantity <= 1}
+                    aria-label="Decrease quantity"
                   >
-                    <Minus className="h-3 w-3" />
+                    <Minus className="h-3 w-3" aria-hidden="true" />
                   </Button>
-                  <div className="w-10 flex items-center justify-center text-sm">
+                  <div className="w-10 flex items-center justify-center text-sm" aria-live="polite" aria-label={`Quantity: ${quantity}`}>
                     {quantity}
                   </div>
                   <Button 
                     variant="ghost" 
                     size="icon" 
-                    className="h-9 w-9 rounded-none border-l border-zinc-700"
+                    className="h-9 w-9 rounded-none border-l border-zinc-700 focus-visible-ring"
                     onClick={increaseQuantity}
+                    aria-label="Increase quantity"
                   >
-                    <Plus className="h-3 w-3" />
+                    <Plus className="h-3 w-3" aria-hidden="true" />
                   </Button>
                 </div>
 
                 <Button 
-                  className="bg-red-500 hover:bg-red-600 flex-1 font-medium"
+                  className="bg-red-500 hover:bg-red-600 flex-1 font-medium focus-visible-ring"
                   onClick={handleAddToCart}
+                  aria-label={`Add ${quantity} ${quantity === 1 ? 'item' : 'items'} of ${product.name} to cart`}
                 >
                   Add to Cart
                 </Button>

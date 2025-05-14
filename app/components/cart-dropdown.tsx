@@ -38,6 +38,9 @@ export function CartDropdown() {
       ref={dropdownRef}
       className="absolute top-full right-0 mt-2 w-96 bg-zinc-800 border border-zinc-700 rounded-lg shadow-xl z-50 overflow-hidden"
       onClick={handleDropdownClick}
+      role="dialog"
+      aria-label="Shopping Cart"
+      tabIndex={-1}
     >
       <div className="p-4 border-b border-zinc-700 flex items-center justify-between">
         <h2 className="font-bold text-lg">Your Cart ({cart.itemCount})</h2>
@@ -60,7 +63,7 @@ export function CartDropdown() {
                   {item.product.image && (
                     <Image 
                       src={item.product.image} 
-                      alt={item.product.name} 
+                      alt={`${item.product.name} - ${item.quantity} in cart`}
                       fill 
                       className="object-cover"
                     />
@@ -72,10 +75,11 @@ export function CartDropdown() {
                     <Button 
                       variant="ghost" 
                       size="icon" 
-                      className="h-6 w-6 rounded-full hover:bg-zinc-700 -mr-2"
+                      className="h-6 w-6 rounded-full hover:bg-zinc-700 -mr-2 focus-visible-ring"
                       onClick={() => removeFromCart(item.product.id)}
+                      aria-label={`Remove ${item.product.name} from cart`}
                     >
-                      <X className="h-3 w-3" />
+                      <X className="h-3 w-3" aria-hidden="true" />
                     </Button>
                   </div>
                   <p className="text-zinc-400 text-xs">{item.product.price}</p>
@@ -83,20 +87,22 @@ export function CartDropdown() {
                     <Button 
                       variant="outline" 
                       size="icon" 
-                      className="h-6 w-6 rounded-sm border-zinc-700"
+                      className="h-6 w-6 rounded-sm border-zinc-700 focus-visible-ring"
                       onClick={() => updateQuantity(item.product.id, item.quantity - 1)}
                       disabled={item.quantity <= 1}
+                      aria-label={`Decrease quantity of ${item.product.name}`}
                     >
-                      <Minus className="h-3 w-3" />
+                      <Minus className="h-3 w-3" aria-hidden="true" />
                     </Button>
-                    <span className="w-8 text-center text-sm">{item.quantity}</span>
+                    <span className="w-8 text-center text-sm" aria-live="polite" aria-atomic="true">{item.quantity}</span>
                     <Button 
                       variant="outline" 
                       size="icon" 
-                      className="h-6 w-6 rounded-sm border-zinc-700"
+                      className="h-6 w-6 rounded-sm border-zinc-700 focus-visible-ring"
                       onClick={() => updateQuantity(item.product.id, item.quantity + 1)}
+                      aria-label={`Increase quantity of ${item.product.name}`}
                     >
-                      <Plus className="h-3 w-3" />
+                      <Plus className="h-3 w-3" aria-hidden="true" />
                     </Button>
                   </div>
                 </div>
@@ -109,13 +115,13 @@ export function CartDropdown() {
               <span className="font-bold">{formatPrice(cart.total)}</span>
             </div>
             <Link href="/checkout">
-              <Button className="w-full bg-red-500 hover:bg-red-600 font-bold">
+              <Button className="w-full bg-red-500 hover:bg-red-600 font-bold focus-visible-ring">
                 CHECKOUT
               </Button>
             </Link>
             <Button 
               variant="link" 
-              className="w-full text-zinc-400 hover:text-zinc-300 mt-2"
+              className="w-full text-medium-contrast hover:text-zinc-300 mt-2 focus-visible-ring"
               onClick={() => setIsCartOpen(false)}
             >
               Continue Shopping
@@ -124,11 +130,11 @@ export function CartDropdown() {
         </>
       ) : (
         <div className="p-8 flex flex-col items-center justify-center">
-          <ShoppingBag className="h-12 w-12 text-zinc-600 mb-3" />
+          <ShoppingBag className="h-12 w-12 text-zinc-600 mb-3" aria-hidden="true" />
           <h3 className="font-bold text-lg mb-1">Your cart is empty</h3>
-          <p className="text-zinc-400 text-center mb-4">Looks like you haven't added any products to your cart yet.</p>
+          <p className="text-medium-contrast text-center mb-4">Looks like you haven't added any products to your cart yet.</p>
           <Button 
-            className="bg-red-500 hover:bg-red-600 font-bold"
+            className="bg-red-500 hover:bg-red-600 font-bold focus-visible-ring"
             onClick={() => setIsCartOpen(false)}
           >
             START SHOPPING

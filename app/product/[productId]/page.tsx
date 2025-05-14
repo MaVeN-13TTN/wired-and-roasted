@@ -43,7 +43,7 @@ export default function ProductPage() {
 
   return (
     <div className="bg-zinc-900 text-zinc-200 min-h-screen pt-8 pb-16">
-      <div className="container mx-auto px-4">
+      <div id="main-content" className="container mx-auto px-4">
         {/* Breadcrumbs */}
         <Breadcrumbs 
           items={[
@@ -60,7 +60,7 @@ export default function ProductPage() {
             {product.image && (
               <Image 
                 src={product.image} 
-                alt={product.name} 
+                alt={`${product.name} - ${product.description} (${product.roastLevel || ''} roast${product.origin ? ` from ${product.origin}` : ''})`}
                 fill 
                 className="object-cover"
                 priority
@@ -90,35 +90,35 @@ export default function ProductPage() {
                   />
                 ))}
               </div>
-              <span className="text-zinc-400 text-sm">42 reviews</span>
+              <span className="text-medium-contrast text-sm">42 reviews</span>
             </div>
 
             <div className="text-2xl font-bold text-amber-500 mb-4">
               {product.price}
             </div>
 
-            <p className="text-zinc-400 mb-6">
+            <p className="text-medium-contrast mb-6">
               {product.description}
             </p>
 
             <div className="space-y-4 mb-6">
               {product.origin && (
                 <div className="flex items-center justify-between border-b border-zinc-800 pb-2">
-                  <span className="text-zinc-400">Origin</span>
+                  <span className="text-medium-contrast">Origin</span>
                   <span className="font-medium">{product.origin}</span>
                 </div>
               )}
               
               {product.roastLevel && (
                 <div className="flex items-center justify-between border-b border-zinc-800 pb-2">
-                  <span className="text-zinc-400">Roast Level</span>
+                  <span className="text-medium-contrast">Roast Level</span>
                   <span className="font-medium capitalize">{product.roastLevel}</span>
                 </div>
               )}
 
               {product.intensity && (
                 <div className="flex items-center justify-between border-b border-zinc-800 pb-2">
-                  <span className="text-zinc-400">Intensity</span>
+                  <span className="text-medium-contrast">Intensity</span>
                   <div className="flex">
                     {Array(5).fill(0).map((_, i) => (
                       <span 
@@ -138,28 +138,31 @@ export default function ProductPage() {
                 <Button 
                   variant="ghost" 
                   size="icon" 
-                  className="h-10 w-10 rounded-none border-r border-zinc-700"
+                  className="h-10 w-10 rounded-none border-r border-zinc-700 focus-visible-ring"
                   onClick={decreaseQuantity}
                   disabled={quantity <= 1}
+                  aria-label="Decrease quantity"
                 >
-                  <Minus className="h-4 w-4" />
+                  <Minus className="h-4 w-4" aria-hidden="true" />
                 </Button>
-                <div className="w-12 flex items-center justify-center text-sm">
+                <div className="w-12 flex items-center justify-center text-sm" aria-live="polite" aria-atomic="true" aria-label={`Quantity: ${quantity}`}>
                   {quantity}
                 </div>
                 <Button 
                   variant="ghost" 
                   size="icon" 
-                  className="h-10 w-10 rounded-none border-l border-zinc-700"
+                  className="h-10 w-10 rounded-none border-l border-zinc-700 focus-visible-ring"
                   onClick={increaseQuantity}
+                  aria-label="Increase quantity"
                 >
-                  <Plus className="h-4 w-4" />
+                  <Plus className="h-4 w-4" aria-hidden="true" />
                 </Button>
               </div>
 
               <Button 
-                className="bg-red-500 hover:bg-red-600 flex-1 font-medium h-10"
+                className="bg-red-500 hover:bg-red-600 flex-1 font-medium h-10 focus-visible-ring"
                 onClick={handleAddToCart}
+                aria-label={`Add ${product.name} to cart`}
               >
                 Add to Cart
               </Button>
@@ -167,14 +170,15 @@ export default function ProductPage() {
               <Button
                 variant="outline"
                 size="icon"
-                className="border-zinc-700 h-10 w-10"
+                className="border-zinc-700 h-10 w-10 focus-visible-ring"
+                aria-label="Add to favorites"
               >
-                <Heart className="h-4 w-4" />
+                <Heart className="h-4 w-4" aria-hidden="true" />
               </Button>
             </div>
 
-            <div className="flex items-center gap-2 text-zinc-400 text-sm">
-              <Share className="h-4 w-4" />
+            <div className="flex items-center gap-2 text-medium-contrast text-sm">
+              <Share className="h-4 w-4" aria-hidden="true" />
               <span>Share this product</span>
             </div>
           </div>
@@ -188,7 +192,8 @@ export default function ProductPage() {
                 <TabsTrigger 
                   key={tab} 
                   value={tab}
-                  className="py-3 px-6 rounded-none data-[state=active]:bg-transparent data-[state=active]:text-red-500 data-[state=active]:border-b-2 data-[state=active]:border-red-500 capitalize font-medium"
+                  className="py-3 px-6 rounded-none data-[state=active]:bg-transparent data-[state=active]:text-red-500 data-[state=active]:border-b-2 data-[state=active]:border-red-500 capitalize font-medium focus-visible-ring"
+                  aria-label={`${tab} tab`}
                 >
                   {tab}
                 </TabsTrigger>
@@ -197,7 +202,7 @@ export default function ProductPage() {
             <TabsContent value="description" className="p-6">
               <div className="max-w-3xl">
                 <h3 className="text-xl font-bold mb-4">About {product.name}</h3>
-                <p className="text-zinc-400 mb-4">
+                <p className="text-medium-contrast mb-4">
                   {product.description} Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam auctor, nisl eget
                   ultricies tincidunt, nunc nisl aliquam nisl, eget aliquam nisl nunc vel nisl. Nullam auctor, nisl eget
                   ultricies tincidunt, nunc nisl aliquam nisl, eget aliquam nisl nunc vel nisl.
@@ -214,23 +219,23 @@ export default function ProductPage() {
                 <h3 className="text-xl font-bold mb-4">Product Specifications</h3>
                 <div className="space-y-4">
                   <div className="grid grid-cols-2 gap-4 border-b border-zinc-800 pb-3">
-                    <span className="text-zinc-400">Weight</span>
+                    <span className="text-medium-contrast">Weight</span>
                     <span>12 oz (340g)</span>
                   </div>
                   <div className="grid grid-cols-2 gap-4 border-b border-zinc-800 pb-3">
-                    <span className="text-zinc-400">Roast Date</span>
+                    <span className="text-medium-contrast">Roast Date</span>
                     <span>Ships within 24 hours of roasting</span>
                   </div>
                   <div className="grid grid-cols-2 gap-4 border-b border-zinc-800 pb-3">
-                    <span className="text-zinc-400">Origin</span>
+                    <span className="text-medium-contrast">Origin</span>
                     <span>{product.origin || 'Various'}</span>
                   </div>
                   <div className="grid grid-cols-2 gap-4 border-b border-zinc-800 pb-3">
-                    <span className="text-zinc-400">Tasting Notes</span>
+                    <span className="text-medium-contrast">Tasting Notes</span>
                     <span>Chocolate, Caramel, Electric Finish</span>
                   </div>
                   <div className="grid grid-cols-2 gap-4 border-b border-zinc-800 pb-3">
-                    <span className="text-zinc-400">Brewing Method</span>
+                    <span className="text-medium-contrast">Brewing Method</span>
                     <span>Perfect for Espresso, Pour Over, French Press</span>
                   </div>
                 </div>

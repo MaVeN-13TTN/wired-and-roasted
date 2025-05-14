@@ -1,0 +1,31 @@
+/* Higher contrast text colors for accessibility */
+.text-high-contrast {
+  color: #f0f0f0 !important; /* Very light gray for high contrast on dark backgrounds */
+}
+
+.text-medium-contrast {
+  color: #d1d1d6 !important; /* Light gray with better contrast than zinc-400 */
+}
+
+/* Focus styles for better keyboard navigation visibility */
+.focus-visible-ring {
+  @apply focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-red-500 focus-visible:ring-offset-2 focus-visible:ring-offset-zinc-800;
+}
+
+/* Screen reader only class */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border-width: 0;
+}
+
+/* Skip to content link - only visible when focused */
+.skip-to-content {
+  @apply fixed left-4 top-4 z-50 transform -translate-y-20 bg-red-500 text-white px-4 py-2 rounded-md focus:translate-y-0 transition-transform duration-200;
+}

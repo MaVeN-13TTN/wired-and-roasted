@@ -20,16 +20,16 @@ export function ProductCard({ product }: ProductCardProps) {
     <div className="group relative flex flex-col bg-zinc-800 rounded-lg overflow-hidden border border-zinc-700 h-full transition-all hover:border-zinc-600">
       {/* Product Image */}
       <div className="aspect-square bg-zinc-900 relative overflow-hidden">
-        <Link href={`/product/${product.id}`} className="block w-full h-full">
+        <Link href={`/product/${product.id}`} className="block w-full h-full focus-visible-ring" aria-label={`View ${product.name} details`}>
           {product.image ? (
             <Image 
               src={product.image} 
-              alt={product.name} 
+              alt={`${product.name} - ${product.roastLevel || ''} roast coffee${product.origin ? ` from ${product.origin}` : ''}`}
               fill 
               className="object-cover transition-transform group-hover:scale-105"
             />
           ) : (
-            <div className="w-full h-full flex items-center justify-center">
+            <div className="w-full h-full flex items-center justify-center" aria-hidden="true">
               <ShoppingBag className="h-16 w-16 text-zinc-700" />
             </div>
           )}
@@ -48,10 +48,11 @@ export function ProductCard({ product }: ProductCardProps) {
         {/* Add to Cart Quick Button */}
         <div className="absolute -bottom-10 left-0 right-0 group-hover:bottom-3 transition-all duration-300 px-3">
           <Button 
-            className="w-full bg-red-500 hover:bg-red-600 text-xs h-9 gap-1 font-medium"
+            className="w-full bg-red-500 hover:bg-red-600 text-xs h-9 gap-1 font-medium mobile-touch-target focus-visible-ring"
             onClick={() => addToCart(product)}
+            aria-label={`Add ${product.name} to cart`}
           >
-            <Plus className="h-4 w-4" />
+            <Plus className="h-4 w-4" aria-hidden="true" />
             Add to Cart
           </Button>
         </div>
@@ -59,13 +60,13 @@ export function ProductCard({ product }: ProductCardProps) {
 
       {/* Product Details */}
       <div className="p-3 flex flex-col flex-1">
-        <Link href={`/product/${product.id}`} className="block mb-1">
+        <Link href={`/product/${product.id}`} className="block mb-1 focus-visible-ring">
           <h3 className="font-bold text-sm line-clamp-1 hover:text-red-500 transition-colors">
             {product.name}
           </h3>
         </Link>
         
-        <p className="text-zinc-400 text-xs line-clamp-2 mb-2 flex-1">
+        <p className="text-medium-contrast text-xs line-clamp-2 mb-2 flex-1">
           {product.description}
         </p>
 
