@@ -14,6 +14,9 @@ import { SearchBar } from "@/app/components/search-bar"
 import { useCart } from "@/app/context/cart-context"
 import { products } from "@/app/types/product"
 import { ProductCard } from "@/app/components/product-card"
+import { TestimonialsSection } from "@/app/components/testimonials-section"
+import { BlogSection } from "@/app/components/blog-section"
+import { FAQSection } from "@/app/components/faq-section"
 
 export default function Home() {
   const isMobile = useIsMobile()
@@ -58,14 +61,19 @@ export default function Home() {
           </Link>
 
           <nav className="hidden md:flex items-center gap-8" aria-label="Main navigation">
-            {["CAFFEINE", "BEANS", "GEAR", "CULTURE"].map((item) => (
+            {[
+              { name: "PRODUCTS", href: "/products" },
+              { name: "BLOG", href: "/blog" },
+              { name: "TESTIMONIALS", href: "#testimonials" },
+              { name: "FAQ", href: "#faq" }
+            ].map((item) => (
               <Link
-                key={item}
-                href="#"
+                key={item.name}
+                href={item.href}
                 className="text-sm font-bold tracking-wider hover:text-red-500 transition-colors relative group px-2 py-2 mobile-touch-target focus-visible-ring"
                 role="menuitem"
               >
-                {item}
+                {item.name}
                 <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-red-500 group-hover:w-full transition-all duration-300"></span>
               </Link>
             ))}
@@ -95,7 +103,9 @@ export default function Home() {
               <CartDropdown />
             </div>
 
-            <Button className="bg-red-500 hover:bg-red-600 text-white font-bold md:inline-flex hidden focus-visible-ring">FUEL UP</Button>
+            <Link href="/products">
+              <Button className="bg-red-500 hover:bg-red-600 text-white font-bold md:inline-flex hidden focus-visible-ring">FUEL UP</Button>
+            </Link>
             <MobileNav>
               <Button variant="ghost" size="icon" className="md:hidden text-medium-contrast focus-visible-ring" aria-label="Open navigation menu">
                 <Menu className="h-5 w-5" aria-hidden="true" />
@@ -125,16 +135,20 @@ export default function Home() {
                 No weak brews.
               </p>
               <div className="flex flex-wrap gap-3 md:gap-4 pt-4">
-                <Button className="bg-red-500 hover:bg-red-600 text-white font-bold text-sm px-5 py-6 md:px-6 w-full sm:w-auto group relative overflow-hidden">
-                  <span className="relative z-10">SHOP STRONGEST BLENDS</span>
-                  <span className="absolute inset-0 bg-gradient-to-r from-red-600 to-amber-500 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></span>
-                </Button>
-                <Button
-                  variant="outline"
-                  className="border-zinc-700 text-zinc-300 hover:border-amber-500 hover:text-amber-500 font-bold text-sm px-5 py-6 md:px-6 w-full sm:w-auto"
-                >
-                  OUR PROCESS
-                </Button>
+                <Link href="/products">
+                  <Button className="bg-red-500 hover:bg-red-600 text-white font-bold text-sm px-5 py-6 md:px-6 w-full sm:w-auto group relative overflow-hidden">
+                    <span className="relative z-10">SHOP STRONGEST BLENDS</span>
+                    <span className="absolute inset-0 bg-gradient-to-r from-red-600 to-amber-500 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></span>
+                  </Button>
+                </Link>
+                <Link href="#features">
+                  <Button
+                    variant="outline"
+                    className="border-zinc-700 text-zinc-300 hover:border-amber-500 hover:text-amber-500 font-bold text-sm px-5 py-6 md:px-6 w-full sm:w-auto"
+                  >
+                    OUR PROCESS
+                  </Button>
+                </Link>
               </div>
 
               <div className="flex items-center gap-3 md:gap-4 pt-4">
@@ -258,7 +272,7 @@ export default function Home() {
         </section>
 
         {/* Features Section */}
-        <section className="py-20 bg-zinc-950 relative">
+        <section id="features" className="py-20 bg-zinc-950 relative">
           <div className="absolute inset-0 bg-noise opacity-[0.07]"></div>
           <div className="absolute top-0 right-1/4 w-64 h-64 bg-amber-500/10 rounded-full blur-3xl"></div>
 
@@ -312,6 +326,15 @@ export default function Home() {
           </div>
         </section>
 
+        {/* Testimonials Section */}
+        <TestimonialsSection />
+
+        {/* Blog Section */}
+        <BlogSection />
+
+        {/* FAQ Section */}
+        <FAQSection />
+
         {/* Newsletter */}
         <section className="py-16 md:py-20 relative overflow-hidden">
           <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgba(220,38,38,0.15),transparent_70%)]"></div>
@@ -357,8 +380,8 @@ export default function Home() {
 
       <footer className="bg-zinc-950 border-t border-zinc-800">
         <div className="container mx-auto px-4 py-10 md:py-12">
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-6 md:gap-8">
-            <div className="col-span-2 md:col-span-1 mb-2 md:mb-0">
+          <div className="grid grid-cols-2 lg:grid-cols-5 gap-6 md:gap-8">
+            <div className="col-span-2 lg:col-span-1 mb-2 md:mb-0">
               <div className="flex items-center gap-2 mb-4 md:mb-6">
                 <div className="relative">
                   <Zap className="h-5 w-5 text-red-500 absolute -left-1 -top-1 opacity-70" />
@@ -383,19 +406,37 @@ export default function Home() {
                 links: ["Our Story", "Roasting Process", "Sustainability", "Wholesale"],
               },
               {
+                title: "LEARN",
+                links: ["Blog", "Brewing Guides", "Coffee Science", "FAQ"],
+              },
+              {
                 title: "CONNECT",
                 links: ["Instagram", "Twitter", "Facebook", "Contact Us"],
               },
             ].map((column, index) => (
               <div key={index}>              <h3 className="font-bold text-zinc-300 mb-3 md:mb-4">{column.title}</h3>
               <ul className="space-y-1.5 md:space-y-2">
-                {column.links.map((link, i) => (
-                  <li key={i}>
-                    <Link href="#" className="text-zinc-500 hover:text-red-500 text-sm transition-colors block py-1.5 px-1 mobile-touch-target focus-visible-ring">
-                      {link}
-                    </Link>
-                  </li>
-                ))}
+                {column.links.map((link, i) => {
+                  let href = "#";
+
+                  // Set appropriate hrefs based on link text
+                  if (link === "All Products") href = "/products";
+                  else if (link === "Blog") href = "/blog";
+                  else if (link === "FAQ") href = "#faq";
+                  else if (link === "Brewing Guides") href = "/blog";
+                  else if (link === "Coffee Science") href = "/blog";
+
+                  return (
+                    <li key={i}>
+                      <Link
+                        href={href}
+                        className="text-zinc-500 hover:text-red-500 text-sm transition-colors block py-1.5 px-1 mobile-touch-target focus-visible-ring"
+                      >
+                        {link}
+                      </Link>
+                    </li>
+                  );
+                })}
                 </ul>
               </div>
             ))}
